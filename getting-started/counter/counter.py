@@ -25,7 +25,7 @@ the photon client class in python, e.g.
 """
 
 from leptonai.photon import Photon
-
+from leptonai.config import ENV_VAR_REQUIRED
 
 class Counter(Photon):
     """
@@ -42,6 +42,17 @@ class Counter(Photon):
     An example to implement a minimal stateful counter is shown in the
     separate safe_counter example.
     """
+
+    deployment_template = {
+        "resource_shape": "cpu.small",
+        "env": {
+            "ENV_A": ENV_VAR_REQUIRED,
+            "ENV_B": "DEFAULT_B",
+        },
+        "secret": [
+            "HUGGING_FACE_HUB_TOKEN",
+        ],
+    }
 
     def init(self):
         self.counter = 0
